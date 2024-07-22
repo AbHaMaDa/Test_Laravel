@@ -1,0 +1,28 @@
+
+
+
+
+*{
+    text-transform: capitalize;
+    a{
+        text-decoration: none;
+        color: white;
+    }
+}
+
+.container{
+    margin-block: 50px;
+    .create{
+        margin: 20px;
+    }
+    table{
+        text-align: center;
+        tr{
+            td{
+                    line-height: 40px;
+
+            }
+        }
+    }
+}
+
