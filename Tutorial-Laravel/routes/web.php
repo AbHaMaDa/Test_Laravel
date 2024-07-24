@@ -25,3 +25,6 @@ Route::put('posts/{id}', [TestController::class,'update'])->name('posts.update')
 
 
 Route::delete('posts/{id}', [TestController::class,'destroy'])->name('posts.destroy');
+
+
+Route::get('search', [TestController::class,'search'])->name('posts.search');

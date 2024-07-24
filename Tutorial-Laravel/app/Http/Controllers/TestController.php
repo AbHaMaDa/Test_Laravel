@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use function Laravel\Prompts\search;
 
 class TestController extends Controller
 {
@@ -55,9 +57,11 @@ class TestController extends Controller
 
     public function create(){
         $users = User::all();
+        $categories = Category::all();
         // @dd($users);
         return view('./posts/create',[
-            'users' => $users
+            'users' => $users,
+            'categories'=>$categories
         ]);
     }
 
@@ -69,12 +73,15 @@ class TestController extends Controller
         $title = $_POST['title'];
         $description = $_POST['description'];
         $post_creator= $_POST['post_creator'];
+        $post_category= $_POST['post_category'];
+
 
 
         $request->validate([
             'title' => ['required','min:3'],
             'description' => ['required','min:6'],
-            'post_creator' => ['required','exists:users,id']
+            'post_creator' => ['required','exists:users,id'],
+            'post_category' => ['required','exists:categories,id']
         ]);
 
 
@@ -93,7 +100,8 @@ class TestController extends Controller
         Post::create([  // you gonna need a $fillable  in model
             'title' => $title ,
             'description' => $description,
-            'user_id' => $post_creator
+            'user_id' => $post_creator,
+            'category_id' =>$post_category
         ]);
 
 
@@ -110,6 +118,8 @@ class TestController extends Controller
 
     public function edit($id){
         $users = User::all();
+        $categories = Category::all();
+
 
 
         $allPostsFromDB = Post::all();
@@ -122,7 +132,8 @@ class TestController extends Controller
                 // @dd($post['id']);
                 return view('./posts/edit',[
                     'post' => $post,
-                    'users' => $users
+                    'users' => $users,
+                    'categories' => $categories
 
                 ]);
             }
@@ -135,12 +146,16 @@ class TestController extends Controller
             $title = $_POST['title'];
             $description = $_POST['description'];
             $post_creator=$_POST['post_creator'];
+            $post_category= $_POST['post_category'];
+
 
 
             $request->validate([
                 'title' => ['required','min:3'],
                 'description' => ['required','min:6'],
-                'post_creator' => ['required','exists:users,id']
+                'post_creator' => ['required','exists:users,id'],
+                'post_category' => ['required','exists:categories,id']
+
             ]);
 
 
@@ -152,7 +167,8 @@ class TestController extends Controller
             $singlePostDB->update([
                 'title' => $title,
                 'description' => $description,
-                'user_id' => $post_creator
+                'user_id' => $post_creator,
+                'category_id'=>$post_category
 
             ]);
 
@@ -172,6 +188,46 @@ class TestController extends Controller
             return to_route('posts.index');
         }
 
+
+
+        public function search(Request $request){
+
+            $search = $request->search;
+
+            // $post = Post::where(function($query) use ($search){
+            //     $query->where('title','like',"%$search%")->orWhere('description','like',"%$search%");
+            // })->orWhereHas('category',function($query) use ($search){
+            //     $query->where('name','like',"%$search%");
+            // })->orWhereHas('user',function($query) use ($search){
+            //     $query->where('name','like',"%$search%");
+            // })->get();
+            
+                $post = Post::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('title', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%");
+                })
+                ->orWhereHas('category', function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->orWhereHas('user', function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->get();
+
+
+
+
+            return  view("./posts/index",[
+                "allposts"=> $post,
+                'search'=>$search,
+                "id"=> 1
+
+            ]);
+
+        }
 
 
 

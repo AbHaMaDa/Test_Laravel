@@ -7,7 +7,17 @@
 
 @section('main')
 
-    <button class="create btn btn-success"><a href={{route('posts.create')}}>create post</a></button>
+    <div class="d-flex  p-2 justify-content-between align-items-center">
+
+        <button class="create btn btn-success "><a href={{route('posts.create')}}>create post</a></button>
+
+        <form class="d-flex  w-50 " action={{route('posts.search')}}  method="GET">
+            @csrf
+            <input name="search" class="form-control" type="text" placeholder="search ...">
+            <button class="input-group-text"   type="submit">search</button>
+        </form>
+
+    </div>
 
     <table class="table table-dark table-striped">
         <thead>
@@ -15,6 +25,7 @@
                 <th scope="col">id</th>
                 <th scope="col">title</th>
                 <th scope="col">posted by</th>
+                <th scope="col">category</th>
                 <th scope="col">created at</th>
                 <th scope="col" >actions</th>
             </tr>
@@ -30,6 +41,7 @@
                 <td>{{$id++}}</td>
                 <td> {{$post['title']}}</td>
                 <td>{{$post->user["name"]}}</td>   {{-- user here is a function in Post model that make Post model belongs to User model --}}
+                <td>{{$post->category['name']}}</td>
                 <td>{{$post['created_at']->format('Y-m-d ')}}</td>
                 <td class="actions">
                     <button class="btn btn-info"><a href= {{route('posts.show',$post['id'])}} >view</a></button>

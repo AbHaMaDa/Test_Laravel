@@ -15,7 +15,9 @@
             <th scope="col">title</th>
             <th scope="col">posted by</th>
             <th scope="col">description</th>
+            <th scope="col">category</th>
             <th scope="col">created at</th>
+
         </tr>
     </thead>
     <tbody>
@@ -26,7 +28,10 @@
         <td> {{$singelPost['title']}}</td>
         <td>{{$singelPost->user['name']}}</td>
         <td>{{$singelPost['description']}}</td>
+        <td>{{$singelPost->category['name']}}</td>
         <td>{{$singelPost['created_at']}}</td>
+
+
     </tr>
 
     </tbody>

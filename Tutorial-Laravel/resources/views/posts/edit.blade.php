@@ -45,6 +45,16 @@
             </select>
             <br>
 
+            <select name="post_category"    class="form-control" id="exampleInputPost"  >
+                @foreach ($categories as $category)
+
+                <option   @selected($category['id'] ==$post['category_id'] )    value={{$category['id']}}>{{$category['name']}}</option>
+
+                @endforeach
+
+            </select>
+            <br>
+
             <input class="btn btn-success" type="submit" value="update">
 
 

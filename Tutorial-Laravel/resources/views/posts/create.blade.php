@@ -43,6 +43,15 @@
 
                 @endforeach
 
+            </select>
+            <br>
+
+            <select name="post_category"    class="form-control" id="exampleInputPost"  >
+                @foreach ($categories as $category)
+
+                <option value={{$category['id']}}>{{$category['name']}}</option>
+
+                @endforeach
 
             </select>
             <br>
