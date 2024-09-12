@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\TestController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,8 +25,28 @@ Route::get('posts/{id}/edit',[TestController::class,'edit'])->name('posts.edit')
 Route::put('posts/{id}', [TestController::class,'update'])->name('posts.update');
 
 
-
 Route::delete('posts/{id}', [TestController::class,'destroy'])->name('posts.destroy');
 
 
 Route::get('search', [TestController::class,'search'])->name('posts.search');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
+// Example of route grouping with prefix 'api'
+
+Route::prefix('/api')->group(function () {
+    Route::get('/data', [ApiController::class, 'getData']);
+});

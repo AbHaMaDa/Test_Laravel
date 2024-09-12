@@ -17,7 +17,6 @@ class TestController extends Controller
         $allPostsFromDB=Post::all(); // get Collection obj
         // @dd($allPostsFromDB);
         // $date=date("Y-m-d  G:i:s");
-
         // $allPosts=[
         //     ['id'=>1,'title'=> 'php','posted_by'=> 'ahmed','created_at'=>$date ],
         //     ['id'=>2,'title'=> 'js','posted_by'=> 'homos','created_at'=>$date ],
@@ -39,13 +38,11 @@ class TestController extends Controller
         $singelPostFromDB=Post::findOrFail($id); // get the ele
         // $singelPostFromDB=Post::where('id',$id)->first(); get frist ele
         // $singelPostFromDB=Post::where('id',$id)->get(); // get all eles that  provides the condition but in Collection obj
-
         // @dd($singelPostFromDB);
 
         // if(is_null($singelPostFromDB)){
         //     return to_route('posts.index');
         // }
-
         // $date=date("Y-m-d  G:i:s");
 
         // $singelPost= ['id'=>$id,'title'=> 'php','posted_by'=> 'ahmed','created_at'=> $date ];
@@ -83,6 +80,7 @@ class TestController extends Controller
             'post_creator' => ['required','exists:users,id'],
             'post_category' => ['required','exists:categories,id']
         ]);
+
 
 
 
@@ -201,7 +199,7 @@ class TestController extends Controller
             // })->orWhereHas('user',function($query) use ($search){
             //     $query->where('name','like',"%$search%");
             // })->get();
-            
+
                 $post = Post::query()
             ->when($search, function ($query, $search) {
                 $query->where(function ($query) use ($search) {
@@ -228,6 +226,9 @@ class TestController extends Controller
             ]);
 
         }
+
+
+
 
 
 

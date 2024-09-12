@@ -21,8 +21,6 @@
         </tr>
     </thead>
     <tbody>
-
-
     <tr>
         <td>{{$singelPost['id']}}</td>
         <td> {{$singelPost['title']}}</td>

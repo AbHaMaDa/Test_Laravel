@@ -13,7 +13,7 @@
 
         <form class="d-flex  w-50 " action={{route('posts.search')}}  method="GET">
             @csrf
-            <input name="search" class="form-control" type="text" placeholder="search ...">
+            <input name="search" class="form-control" type="text" placeholder="search ..." value={{old('search')}}>
             <button class="input-group-text"   type="submit">search</button>
         </form>
 
